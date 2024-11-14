@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const { GetCart,AddCart ,DeleteCart} = require('./cart.contoller'); 
-
-router.get('/carts', GetCart); 
-router.post('/addcart/:id',AddCart)
-router.delete('/delcart/:id',DeleteCart)
+const { getCart, AddCart, DeleteCart } = require('./cart.controller');
+const  verifyToken  = require('../middleware/verifyuser')
+console.log(getCart);
+router.get('/carts', verifyToken ,getCart);
+router.post('/addcart/:id', verifyToken,AddCart)
+router.delete('/delcart/:id', verifyToken,DeleteCart)
 module.exports = router;

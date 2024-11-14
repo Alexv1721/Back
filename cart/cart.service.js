@@ -1,29 +1,26 @@
 const {getCartFromDB,deletecartfromDB} = require('./cart.db');
 const {addcartbyid}=require('./cart.db')
+const { NotfoundError, AppError } = require('../utils/custom.err');
 const CartService = {
-    cart: async () => {
-        try {
-            const carts = await getCartFromDB();
+    cart: async (userId) => {
+            const carts = await getCartFromDB(userId);
             return carts;
-        } catch (err) {
-            throw new Error('Error in fetching cart in service');
-        }
     }
-    ,addcart:async(id)=>{
+    ,addcart:async(id,user)=>{
         try{
-            const cart=await addcartbyid(id)
+            const cart=await addcartbyid(id,user)
             return cart
         }
         catch(err){
-            throw new Error(err.message)
+            throw new AppError('Error in add item to cart')
         }
     }
-    ,delcart:async(id)=>{
+    ,delcart:async(id,userId)=>{
         try{
-    const dcart=await deletecartfromDB(id)
+    const dcart=await deletecartfromDB(id,userId)
         }
         catch(err){
-throw new Error('error in del to db')
+throw new AppError('error in delete Cart')
         }
 
     }

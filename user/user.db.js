@@ -1,25 +1,22 @@
+
 const User = require('./user.model');
 
 // Find user by email
 const findUserByEmail = async (email) => {
-    try {
-        const user = await User.findOne({ email }).lean();
+        const user = await User.findOne({email:email});
         return user;
-    } catch (error) {
-        throw new Error('Database query error');
-    }
 };
 
-
-const createNewUser = async (username, email, password) => {
+const createNewUser = async (username, email, password,role='normal') => {
     try {
-        const user = new User({
-            username,
-            email,
-            password
-        });
-        const response = await user.save();
-        return response;
+        const u={
+            username:username,
+            email:email,
+            password:password,
+            role:role
+        }
+        const user = await User.create(u)
+        return user;
     } catch (error) {
         throw new Error('User creation failed');
     }

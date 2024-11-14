@@ -1,34 +1,31 @@
 const {getOrdersFromDB,addordertodb,addorderstoDB} = require('./order.db');
-
+const { NotfoundError, AppError } = require('../utils/custom.err');
 const OrderService = {
-    getorders: async () => {
+    getorders: async (uid) => {
         try {
-            const orders = await getOrdersFromDB();  
+            const orders = await getOrdersFromDB(uid);  
             return orders;
         } catch (err) {
-            throw new Error('Error fetching orders in service');
+            throw new AppError('Error fetching orders ');
         }
     }
     ,
-addorder:async(id)=>{
+addorder:async(id,uid,count)=>{
 try{
-    const order=await addordertodb(id)
+    const order=await addordertodb(id,uid,count)
     return order
 }
 catch(err){
-    throw new Error('Error in adding to db')
+    throw new AppError('Error in add order ')
 }
     }
-
-
-
-
-,addorders:async(data)=>{
+,addorders:async(data,uId)=>{
 try{
-    await addorderstoDB(data)
+    await addorderstoDB(data,uId)
 }
-catch{
-    throw new Error('Fail to add to db')
+catch(err){
+
+    throw new AppError('Error in add order ')
 }
 }
 };

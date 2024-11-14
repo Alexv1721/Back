@@ -7,6 +7,8 @@ const cartSchema = new mongoose.Schema({
     price: Number,
     rating: { rate: Number, count: Number },
     title: String,
+    user:{type:mongoose.Schema.ObjectId,ref:'User'}
+  
 });
 
-module.exports = mongoose.model('Cart', cartSchema);  // Correct export with singular 'Cart'
+module.exports = mongoose.model('Cart', cartSchema);  
